@@ -1,11 +1,12 @@
 import { Button } from "../ui/button";
 import { NavLink, useNavigate } from "react-router";
-
-import { LayoutDashboard, Plus, Settings } from "lucide-react";
+import { LayoutDashboard, Plus, Settings, Menu } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -25,8 +26,23 @@ const Header = () => {
           </Button>
         </div>
 
+        {/* Mobile Menu Button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          <Menu className="h-5 w-5" />
+        </Button>
+
         {/* Navigation Links */}
-        <nav className="flex justify-end gap-1">
+        <nav className={cn(
+          "md:flex md:justify-end md:gap-1",
+          "fixed md:static inset-x-0 top-[3.5rem] p-4 border-b md:border-none bg-background/95 backdrop-blur md:backdrop-blur-none md:bg-transparent",
+          "flex-col md:flex-row gap-2 md:gap-1",
+          !isMenuOpen && "hidden"
+        )}>
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -72,8 +88,6 @@ const Header = () => {
             <span>Settings</span>
           </NavLink>
         </nav>
-
-
       </div>
     </header>
   );
