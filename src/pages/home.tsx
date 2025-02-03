@@ -3,8 +3,9 @@ import { Link } from 'react-router'
 import { Loader, Plus } from 'lucide-react'
 import { useTasks } from '../hooks/use-tasks'
 import { Button } from '../components/ui/button'
+import { withLayout } from '../HOC/withLayout'
 
-export default function HomePage() {
+function Home() {
   const { data: tasks, isLoading, error } = useTasks()
 
   if (isLoading) return <Loader className="animate-spin" />
@@ -53,3 +54,5 @@ export default function HomePage() {
     </div>
   )
 }
+
+export default withLayout(Home)
