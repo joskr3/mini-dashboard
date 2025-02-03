@@ -54,7 +54,7 @@ export function useCreateTask() {
 
 export function useUpdateTask() {
     const queryClient = useQueryClient()
-
+    const navigate = useNavigate()
     return useMutation({
         mutationFn: async ({ id, ...taskData }: Partial<Task>) => {
             const response = await fetch(`${API_URL}/${id}`, {
@@ -68,6 +68,7 @@ export function useUpdateTask() {
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['tasks'] })
             queryClient.invalidateQueries({ queryKey: ['task', data.id] })
+            navigate("/")
         }
     })
 }

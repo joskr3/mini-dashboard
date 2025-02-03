@@ -1,15 +1,22 @@
 import { Link } from 'react-router'
-
-import { Loader, Plus } from 'lucide-react'
+import { Check, Clock, Loader, Plus } from 'lucide-react'
 import { useTasks } from '../hooks/use-tasks'
 import { Button } from '../components/ui/button'
 import { withLayout } from '../HOC/withLayout'
+import { cn } from '../lib/utils'
 
 function Home() {
   const { data: tasks, isLoading, error } = useTasks()
 
   if (isLoading) return <Loader className="animate-spin" />
   if (error) return <div>Error loading tasks</div>
+
+  const sortedTasks = tasks?.sort((a, b) => {
+    if (a.done !== b.done) {
+      return a.done ? 1 : -1
+    }
+    return b.id - a.id
+  })
 
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -24,10 +31,13 @@ function Home() {
       </div>
 
       <div className="space-y-2">
-        {tasks?.map((task) => (
+        {sortedTasks?.map((task) => (
           <div
             key={task.id}
-            className="p-4 border rounded-lg hover:bg-accent transition-colors"
+            className={cn(
+              "p-4 border rounded-lg hover:bg-accent transition-colors",
+              Number(task.done) === 1 && "opacity-60"
+            )}
           >
             <Link
               to={`/tasks/${task.id}`}
@@ -40,12 +50,19 @@ function Home() {
                 </p>
               </div>
               <span
-                className={`px-2 py-1 rounded-full text-xs ${task.done
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-yellow-100 text-yellow-800'
-                  }`}
+                className={cn(
+                  "px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5",
+                  Number(task.done) === 1
+                    ? "bg-green-100 text-green-800"
+                    : "bg-yellow-100 text-yellow-800"
+                )}
               >
-                {task.done ? 'Completed' : 'Pending'}
+                {Number(task.done) === 1 ? (
+                  <Check className="h-3 w-3" />
+                ) : (
+                  <Clock className="h-3 w-3" />
+                )}
+                {Number(task.done) === 1 ? "Completed" : "Pending"}
               </span>
             </Link>
           </div>
