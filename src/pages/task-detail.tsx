@@ -4,8 +4,9 @@ import { Loader, Trash } from 'lucide-react'
 import { useDeleteTask, useTask, useUpdateTask } from '../hooks/use-tasks'
 import { Button } from '../components/ui/button'
 import { TaskForm } from '../components/custom/task-form'
+import { withLayout } from '../HOC/withLayout'
 
-export default function TaskDetailPage() {
+function TaskDetail() {
   const { id } = useParams<{ id: string }>()
  // const navigate = useNavigate()
   const { data: task, isLoading, error } = useTask(Number(id))
@@ -50,3 +51,5 @@ export default function TaskDetailPage() {
     </div>
   )
 }
+
+export default withLayout(TaskDetail)
