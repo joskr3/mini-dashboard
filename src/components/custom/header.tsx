@@ -1,12 +1,14 @@
 import { Button } from "../ui/button";
 import { NavLink, useNavigate } from "react-router";
-import { LayoutDashboard, Plus, Settings, Menu } from "lucide-react";
+import { LayoutDashboard, Plus, Settings, Menu, Moon, Sun } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { useState } from "react";
+import { useTheme } from "../../context/theme-context";
 
 const Header = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -26,15 +28,31 @@ const Header = () => {
           </Button>
         </div>
 
-        {/* Mobile Menu Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <Menu className="h-5 w-5" />
-        </Button>
+        <div className="flex items-center gap-2">
+          {/* Theme Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            className="rounded-full"
+          >
+            {theme === "light" ? (
+              <Moon className="h-5 w-5" />
+            ) : (
+              <Sun className="h-5 w-5" />
+            )}
+          </Button>
+
+          {/* Mobile Menu Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+        </div>
 
         {/* Navigation Links */}
         <nav className={cn(
