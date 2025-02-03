@@ -51,7 +51,7 @@ function Home() {
             key={task.id}
             className={cn(
               "p-4 border rounded-lg hover:bg-accent transition-all",
-              Number(task.done) === 1 && "opacity-60 backdrop-blur-sm bg-opacity-80"
+              Number(task.done) === 1 && "opacity-30 backdrop-blur-sm bg-opacity-90 hover:opacity-60"
             )}
           >
             <div className="flex justify-between items-start gap-4">
@@ -59,14 +59,16 @@ function Home() {
                 to={`/tasks/${task.id}`}
                 className={cn(
                   "flex-1",
-                  !isTaskExpanded(task.id, Number(task.done)) && "overflow-hidden"
+                  !isTaskExpanded(task.id, Number(task.done)) && "overflow-hidden",
+                  Number(task.done) === 1 && !isTaskExpanded(task.id, Number(task.done)) && "max-h-8"
                 )}
               >
                 <div>
-                  <h3 className="font-medium">{task.title}</h3>
+                  <h3 className="font-medium truncate">{task.title}</h3>
                   <p className={cn(
                     "text-sm text-muted-foreground transition-all",
-                    !isTaskExpanded(task.id, Number(task.done)) ? "line-clamp-1" : "line-clamp-none"
+                    !isTaskExpanded(task.id, Number(task.done)) ? "line-clamp-1" : "line-clamp-none",
+                    Number(task.done) === 1 && !isTaskExpanded(task.id, Number(task.done)) && "hidden"
                   )}>
                     {task.description}
                   </p>
