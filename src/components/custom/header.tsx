@@ -21,7 +21,7 @@ const Header = () => {
             className="rounded-full hover:bg-accent/90 transition-all"
           >
             <img
-              src="./logo.svg"
+              src="/logo.svg"
               alt="logo"
               className="hover:scale-105 transition-transform"
             />
