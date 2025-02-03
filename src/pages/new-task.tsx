@@ -1,7 +1,8 @@
 import { TaskForm } from "../components/custom/task-form"
+import { withLayout } from "../HOC/withLayout"
 import { useCreateTask } from "../hooks/use-tasks"
 
-export default function NewTaskPage() {
+ function NewTaskPage() {
   const createMutation = useCreateTask()
 
   return (
@@ -14,3 +15,5 @@ export default function NewTaskPage() {
     </div>
   )
 }
+
+export default withLayout(NewTaskPage)

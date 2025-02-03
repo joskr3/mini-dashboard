@@ -45,9 +45,9 @@ export function useCreateTask() {
             if (!response.ok) throw new Error('Error creating task')
             return response.json()
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['tasks'] })
-            navigate(`/tasks/${data.id}`)
+            navigate(`/`)
         }
     })
 }
