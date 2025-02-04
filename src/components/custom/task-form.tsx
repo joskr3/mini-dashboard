@@ -1,9 +1,10 @@
-import { Checkbox } from '@radix-ui/react-checkbox'
+
 import { useForm } from 'react-hook-form'
 import { TaskFormData } from '../../lib/types'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
+import { Checkbox } from '../ui/checkbox'
 
 
 interface TaskFormProps {
