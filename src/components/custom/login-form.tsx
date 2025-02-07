@@ -1,22 +1,20 @@
-// components/RegisterForm.tsx
+// components/LoginForm.tsx
 import { useForm } from "react-hook-form";
 import { Label } from "@radix-ui/react-label";
 import { GalleryVerticalEnd } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { RegisterFormData } from "../../lib/types";
+import { NavLink } from "react-router";
+import { LoginFormData } from "../../lib/types";
 
-interface RegisterFormProps {
-  onSubmit: (data: RegisterFormData) => void;
-  initialData?: Partial<RegisterFormData>;
+interface LoginFormProps {
+  onSubmit: (data: LoginFormData) => void;
   isSubmitting?: boolean;
 }
 
-export function RegisterForm({ onSubmit, initialData, isSubmitting }: RegisterFormProps) {
-  const { register, handleSubmit } = useForm<RegisterFormData>({
-    defaultValues: initialData,
-  });
+export function LoginForm({ onSubmit, isSubmitting }: LoginFormProps) {
+  const { register, handleSubmit } = useForm<LoginFormData>();
 
   return (
     <div className={cn("flex flex-col gap-6")}>
@@ -26,27 +24,25 @@ export function RegisterForm({ onSubmit, initialData, isSubmitting }: RegisterFo
             <div className="flex h-8 w-8 items-center justify-center rounded-md">
               <GalleryVerticalEnd className="size-6" />
             </div>
-            <h1 className="text-xl font-bold">Bienvenido a Tasks.</h1>
+            <h1 className="text-xl font-bold">Bienvenido de nuevo</h1>
+            <div className="text-center text-sm">
+              ¿No tienes una cuenta?{" "}
+              <NavLink to="/register" className="underline underline-offset-4">
+                Regístrate
+              </NavLink>
+            </div>
           </div>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
-              <Label htmlFor="name">Nombre</Label>
-              <Input id="name" {...register("name", { required: true })} />
-            </div>
-            <div className="grid gap-2">
               <Label htmlFor="username">Usuario</Label>
               <Input id="username" {...register("username", { required: true })} />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" {...register("email", { required: true })} />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Contraseña</Label>
               <Input id="password" type="password" {...register("password", { required: true })} />
             </div>
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Registrando..." : "Registrarse"}
+              {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
             </Button>
           </div>
         </div>

@@ -8,24 +8,18 @@ export interface Task {
   owner_id: number
 }
 
-export interface Task {
-  id: number
-  title: string
-  description?: string
-  done: boolean | number
-  createdAt: string
-  updatedAt: string
-}
+export type TaskFormData = Pick<Task, 'title' | 'description' | 'done'>
 
 export interface User {
-  id?: number
-  name? : string
-  username? : string
-  email? : string
-  password?: string
-  createdAt?: string
-  updatedAt?: string
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export type TaskFormData = Pick<Task, 'title' | 'description' | 'done'>
-export type SignupFormData = Pick<User,'name' | 'username | email | password'>
+export type LoginFormData = Pick<User, 'username' | 'password'>;
+
+export type RegisterFormData = Pick<User, 'name' | 'username' | 'email' | 'password'>;
