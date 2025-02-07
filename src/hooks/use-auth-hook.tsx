@@ -97,6 +97,7 @@ export function useSignup() {
 
   return useMutation({
     mutationFn: async (data: RegisterFormData) => {
+      console.log(data,"DATA")
       const response = await fetch(`${API_URL}/register`, {
         method: 'POST',
         headers: {
@@ -105,6 +106,8 @@ export function useSignup() {
         },
         body: JSON.stringify(data)
       });
+
+      console.log(response,"RESPONSE")
 
       if (!response.ok) {
         const errorMessage = await response.text();
