@@ -23,7 +23,7 @@ export function TaskForm({ onSubmit, initialData, isSubmitting }: TaskFormProps)
       <div>
         <label className="block text-sm font-medium mb-1">Title</label>
         <Input
-          {...register('title', { required: true })}
+          {...register('name', { required: true })}
           placeholder="Task title"
         />
       </div>
