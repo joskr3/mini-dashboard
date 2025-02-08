@@ -92,13 +92,12 @@ export function useLogin() {
 
 // Signup Mutation Hook
 export function useSignup() {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
-
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: RegisterFormData) => {
-      console.log(data,"DATA")
-      const response = await fetch(`${API_URL}/register`, {
+      // First register the user
+      const registerResponse = await fetch(`${API_URL}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,17 +106,33 @@ export function useSignup() {
         body: JSON.stringify(data)
       });
 
-      console.log(response,"RESPONSE")
-
-      if (!response.ok) {
-        const errorMessage = await response.text();
+      if (!registerResponse.ok) {
+        const errorMessage = await registerResponse.text();
         throw new Error(errorMessage || 'Signup failed');
       }
 
-      const authResponse: AuthResponse = await response.json();
+      // After successful registration, perform login
+      const formData = new URLSearchParams();
+      formData.append('username', data.username);
+      formData.append('password', data.password);
+
+      const loginResponse = await fetch(`${API_URL}/token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'accept': 'application/json'
+        },
+        body: formData
+      });
+
+      if (!loginResponse.ok) {
+        throw new Error('Registration successful but login failed');
+      }
+
+      const authResponse: AuthResponse = await loginResponse.json();
       localStorage.setItem('token', authResponse.access_token);
 
-      // Fetch user data after successful signup
+      // Fetch user data
       const userResponse = await fetch(`${API_URL}/me`, {
         headers: { 
           Authorization: `Bearer ${authResponse.access_token}`,
@@ -134,9 +149,11 @@ export function useSignup() {
       queryClient.setQueryData(['user'], data);
       navigate('/');
     },
+    onError: (error) => {
+      console.error('Signup error:', error);
+    },
   });
 }
-
 // Logout Mutation Hook
 export function useLogout() {
   const queryClient = useQueryClient();
