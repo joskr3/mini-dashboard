@@ -1,14 +1,16 @@
 // import { useNavigate } from "react-router"
+
 import { TaskForm } from "../components/custom/task-form"
 import { withLayout } from "../HOC/withLayout"
 import { useCreateTask } from "../hooks/use-tasks"
+
 
 function NewTaskPage() {
   const createMutation = useCreateTask()
 
   const handleSubmit = (data: any) => {
 
-    
+
     createMutation.mutate({ name: data.title, description: data.description, done: data.done === 'on' ? true : false }, {
       onError: (error) => {
         console.error('Failed to create task:', error)

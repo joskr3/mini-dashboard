@@ -1,23 +1,17 @@
-import { Link, useNavigate } from 'react-router'
+import { Link } from 'react-router'
 import { Check, Clock, Loader, Plus, ChevronDown, ChevronUp } from 'lucide-react'
 import { useTasks } from '../hooks/use-tasks'
 import { Button } from '../components/ui/button'
 import { withLayout } from '../HOC/withLayout'
 import { cn } from '../lib/utils'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useAuth } from '../context/auth-context'
 
 function Home() {
   const { data: tasks, isLoading, error } = useTasks()
   const [expandedTasks, setExpandedTasks] = useState<number[]>([])
-  const navigate = useNavigate()
   const { user } = useAuth()
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/login')
-    }
-  }, [user, navigate])
 
   const toggleExpand = (taskId: number) => {
     setExpandedTasks(prev => {
@@ -44,7 +38,7 @@ function Home() {
       <Loader className="animate-spin" />
     </div>
   )
-  
+
   if (error || !user) return null
 
   return (
@@ -84,7 +78,7 @@ function Home() {
                   )}
                 >
                   <div>
-                    <h3 className="font-medium truncate">{task.title}</h3>
+                    <h3 className="font-medium truncate">{task.name}</h3>
                     <p className={cn(
                       "text-sm text-muted-foreground transition-all",
                       !isTaskExpanded(task.id, Number(task.done)) ? "line-clamp-1" : "line-clamp-none",
