@@ -63,7 +63,7 @@ function TaskDetail() {
           onSubmit={(data) => {
             const formattedData = {
               ...data,
-              done: data.done ? 1 : 0
+              done: data.done ? true : false
             }
             updateMutation.mutate({ id: task.id, ...formattedData })
           }}
