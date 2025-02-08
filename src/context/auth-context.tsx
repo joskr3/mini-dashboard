@@ -7,19 +7,25 @@ type AuthProviderProps = {
 }
 
 type AuthProviderState = {
-    user: User | undefined
-    login: (username: string, password: string) => Promise<{ username: string }>
-    signup: (data: RegisterFormData) => Promise<any>
+    user: User | null
+    login: (username: string, password: string) => Promise<User>
+    signup: (data: RegisterFormData) => Promise<User>
     logout: () => Promise<null>
     isLoading: boolean
     isError: boolean
 }
 
 const initialState: AuthProviderState = {
-    user: undefined,
-    login: async () => ({ username: '' }),
-    signup: async () => ({}),
-    logout: async () => null,
+    user: null,
+    login: async () => {
+        throw new Error('AuthProvider not initialized')
+    },
+    signup: async () => {
+        throw new Error('AuthProvider not initialized')
+    },
+    logout: async () => {
+        throw new Error('AuthProvider not initialized')
+    },
     isLoading: false,
     isError: false,
 }
@@ -27,10 +33,19 @@ const initialState: AuthProviderState = {
 const AuthContext = createContext<AuthProviderState>(initialState)
 
 export function AuthProvider({ children }: AuthProviderProps) {
-    const auth = useAuthHook()
+    const { user, login, signup, logout, isLoading, isError } = useAuthHook()
+
+    const value = {
+        user: user || null,
+        login,
+        signup,
+        logout,
+        isLoading,
+        isError,
+    }
 
     return (
-        <AuthContext.Provider value={auth}>
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     )
@@ -39,8 +54,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 export const useAuth = () => {
     const context = useContext(AuthContext)
 
-    if (context === undefined)
+    if (context === undefined) {
         throw new Error("useAuth must be used within an AuthProvider")
+    }
 
     return context
 }

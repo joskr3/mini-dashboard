@@ -14,10 +14,10 @@ function Home() {
   const { user } = useAuth()
 
   useEffect(() => {
-    if (!user || error || (!isLoading && (!tasks || tasks.length === 0))) {
+    if (!user) {
       navigate('/login')
     }
-  }, [user, tasks, isLoading, error, navigate])
+  }, [user, navigate])
 
   const toggleExpand = (taskId: number) => {
     setExpandedTasks(prev => {
@@ -60,9 +60,10 @@ function Home() {
       </div>
 
       <div className="space-y-2">
-        {sortedTasks?.length === 0 ? (
-          <div className="text-center text-muted-foreground py-8">
-            No tasks yet. Create your first task!
+        {!tasks || tasks.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <p className="text-lg text-muted-foreground mb-4">No tasks found</p>
+            <p className="text-sm text-muted-foreground">Create your first task by clicking the "New Task" button above</p>
           </div>
         ) : (
           sortedTasks?.map((task) => (

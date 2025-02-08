@@ -1,6 +1,6 @@
 export interface Task {
   id: number
-  title: string
+  name: string
   description?: string
   done: boolean | number
   createdAt: string
@@ -8,7 +8,7 @@ export interface Task {
   owner_id: number
 }
 
-export type TaskFormData = Pick<Task, 'title' | 'description' | 'done'>
+export type TaskFormData = Pick<Task, 'name' | 'description' | 'done'>
 
 export interface User {
   id: number;
