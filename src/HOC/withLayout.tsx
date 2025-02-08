@@ -17,7 +17,7 @@ export function withLayout(Component: any) {
         navigate('/login')
       }
     }, [user, navigate])
-    
+
     return (
       <>
         <Header />

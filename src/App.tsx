@@ -12,7 +12,7 @@ function App() {
     <AuthProvider>
       <ThemeProvider defaultTheme="system">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage/>} />
           <Route path="/tasks/new" element={<NewTaskPage />} />
           <Route path="/tasks/:id" element={<TaskDetailPage />} />
           <Route path="/login" element={<LoginPage />} />
