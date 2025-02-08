@@ -2,7 +2,7 @@ export interface Task {
   id: number
   name: string
   description?: string
-  done: boolean | number
+  done: boolean 
   createdAt: string
   updatedAt: string
   owner_id: number

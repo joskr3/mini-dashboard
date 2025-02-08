@@ -22,8 +22,8 @@ function Home() {
     })
   }
 
-  const isTaskExpanded = (taskId: number, isDone: number) => {
-    return Number(isDone) === 0 || expandedTasks.includes(taskId)
+  const isTaskExpanded = (taskId: number, isDone: boolean) => {
+    return isDone || expandedTasks.includes(taskId)
   }
 
   const sortedTasks = tasks?.sort((a, b) => {
@@ -73,16 +73,16 @@ function Home() {
                   to={`/tasks/${task.id}`}
                   className={cn(
                     "flex-1",
-                    !isTaskExpanded(task.id, Number(task.done)) && "overflow-hidden",
-                    Number(task.done) === 1 && !isTaskExpanded(task.id, Number(task.done)) && "max-h-8"
+                    !isTaskExpanded(task.id, task.done) && "overflow-hidden",
+                    Number(task.done) === 1 && !isTaskExpanded(task.id, task.done) && "max-h-8"
                   )}
                 >
                   <div>
                     <h3 className="font-medium truncate">{task.name}</h3>
                     <p className={cn(
                       "text-sm text-muted-foreground transition-all",
-                      !isTaskExpanded(task.id, Number(task.done)) ? "line-clamp-1" : "line-clamp-none",
-                      Number(task.done) === 1 && !isTaskExpanded(task.id, Number(task.done)) && "hidden"
+                      !isTaskExpanded(task.id, task.done) ? "line-clamp-1" : "line-clamp-none",
+                      Number(task.done) === 1 && !isTaskExpanded(task.id, task.done) && "hidden"
                     )}>
                       {task.description}
                     </p>
@@ -92,17 +92,17 @@ function Home() {
                   <span
                     className={cn(
                       "px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5",
-                      Number(task.done) === 1
+                      task.done
                         ? "bg-green-100 text-green-800"
                         : "bg-yellow-100 text-yellow-800"
                     )}
                   >
-                    {Number(task.done) === 1 ? (
+                    {task.done ? (
                       <Check className="h-3 w-3" />
                     ) : (
                       <Clock className="h-3 w-3" />
                     )}
-                    {Number(task.done) === 1 ? "Completed" : "Pending"}
+                    {task.done ? "Completed" : "Pending"}
                   </span>
                   <Button
                     variant="ghost"
@@ -113,7 +113,7 @@ function Home() {
                       toggleExpand(task.id)
                     }}
                   >
-                    {isTaskExpanded(task.id, Number(task.done)) ? (
+                    {isTaskExpanded(task.id, task.done) ? (
                       <ChevronUp className="h-4 w-4" />
                     ) : (
                       <ChevronDown className="h-4 w-4" />

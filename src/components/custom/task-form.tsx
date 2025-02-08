@@ -21,10 +21,10 @@ export function TaskForm({ onSubmit, initialData, isSubmitting }: TaskFormProps)
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium mb-1">Title</label>
+        <label className="block text-sm font-medium mb-1">Task</label>
         <Input
           {...register('name', { required: true })}
-          placeholder="Task title"
+          placeholder="Task name"
         />
       </div>
 

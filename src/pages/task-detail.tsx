@@ -20,7 +20,7 @@ function TaskDetail() {
   const handleToggleDone = () => {
     updateMutation.mutate({
       id: task.id,
-      done: task.done ? 0 : 1
+      done: task.done ? false : true
     })
   }
 
