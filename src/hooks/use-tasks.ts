@@ -119,7 +119,7 @@ export function useDeleteTask() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['tasks'] });
-            navigate('/');
+            navigate('/');  
         }
     });
 }

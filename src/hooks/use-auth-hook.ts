@@ -150,7 +150,7 @@ export function useSignup() {
       navigate('/');
     },
     onError: (error) => {
-      console.error('Signup error:', error);
+      console.error('Register error:', error);
     },
   });
 }
